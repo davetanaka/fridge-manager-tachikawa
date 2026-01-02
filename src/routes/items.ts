@@ -68,9 +68,11 @@ items.get('/', async (c) => {
       items: itemsWithExpiry,
     });
   } catch (error: any) {
+    console.error('API Error:', error);
     return c.json({
       success: false,
-      error: error.message,
+      error: error.message || 'An error occurred',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     }, 500);
   }
 });
@@ -112,9 +114,11 @@ items.get('/:id', async (c) => {
       item: itemWithExpiry,
     });
   } catch (error: any) {
+    console.error('API Error:', error);
     return c.json({
       success: false,
-      error: error.message,
+      error: error.message || 'An error occurred',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     }, 500);
   }
 });
@@ -166,9 +170,11 @@ items.post('/', async (c) => {
       message: 'Item created successfully',
     }, 201);
   } catch (error: any) {
+    console.error('API Error:', error);
     return c.json({
       success: false,
-      error: error.message,
+      error: error.message || 'An error occurred',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     }, 500);
   }
 });
@@ -233,9 +239,11 @@ items.put('/:id', async (c) => {
       message: 'Item updated successfully',
     });
   } catch (error: any) {
+    console.error('API Error:', error);
     return c.json({
       success: false,
-      error: error.message,
+      error: error.message || 'An error occurred',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     }, 500);
   }
 });
@@ -256,9 +264,11 @@ items.delete('/:id', async (c) => {
       message: 'Item deleted successfully',
     });
   } catch (error: any) {
+    console.error('API Error:', error);
     return c.json({
       success: false,
-      error: error.message,
+      error: error.message || 'An error occurred',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     }, 500);
   }
 });
@@ -318,9 +328,11 @@ items.post('/:id/consume', async (c) => {
       status: newStatus,
     });
   } catch (error: any) {
+    console.error('API Error:', error);
     return c.json({
       success: false,
-      error: error.message,
+      error: error.message || 'An error occurred',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     }, 500);
   }
 });

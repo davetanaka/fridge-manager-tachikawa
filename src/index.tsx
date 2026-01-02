@@ -175,7 +175,7 @@ app.get('/', (c) => {
                 <!-- Expiry Date -->
                 <div class="mb-4">
                     <label class="block text-base font-medium text-gray-700 mb-2">消費期限</label>
-                    <input type="date" id="expiryDate" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base">
+                    <input type="date" id="expiryDate" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base" style="max-width: 100%;">
                     <div class="flex flex-wrap gap-2 mt-2">
                         <button type="button" onclick="setQuickDate(0)" class="text-sm bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">今日</button>
                         <button type="button" onclick="setQuickDate(1)" class="text-sm bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">明日</button>
@@ -271,8 +271,14 @@ app.get('/', (c) => {
                 }
             } catch (error) {
                 console.error('Error loading items:', error);
+                const errorMsg = error.response?.data?.error || error.message || '不明なエラー';
                 document.getElementById('itemsList').innerHTML = 
-                    '<div class="text-center text-red-500 py-8">読み込みエラーが発生しました</div>';
+                    '<div class="text-center text-red-500 py-8">読み込みエラー: ' + errorMsg + '</div>';
+                console.error('Detailed error:', {
+                    message: error.message,
+                    response: error.response?.data,
+                    status: error.response?.status
+                });
             }
         }
 
@@ -408,7 +414,8 @@ app.get('/', (c) => {
                 expiry_date: document.getElementById('expiryDate').value || null,
                 storage_location: document.getElementById('storageLocation').value,
                 quantity: parseInt(document.getElementById('quantity').value),
-                memo: document.getElementById('memo').value
+                memo: document.getElementById('memo').value,
+                registered_by: 1  // TODO: Get from authentication
             };
             
             try {
@@ -421,7 +428,14 @@ app.get('/', (c) => {
                 loadItems();
             } catch (error) {
                 console.error('Error saving item:', error);
-                alert('保存に失敗しました');
+                const errorMsg = error.response?.data?.error || error.message || '不明なエラー';
+                alert('保存に失敗しました: ' + errorMsg);
+                // Log detailed error for debugging
+                console.error('Detailed error:', {
+                    message: error.message,
+                    response: error.response?.data,
+                    status: error.response?.status
+                });
             }
         }
 
@@ -433,7 +447,13 @@ app.get('/', (c) => {
                 loadItems();
             } catch (error) {
                 console.error('Error deleting item:', error);
-                alert('削除に失敗しました');
+                const errorMsg = error.response?.data?.error || error.message || '不明なエラー';
+                alert('削除に失敗しました: ' + errorMsg);
+                console.error('Detailed error:', {
+                    message: error.message,
+                    response: error.response?.data,
+                    status: error.response?.status
+                });
             }
         }
 
@@ -471,7 +491,13 @@ app.get('/', (c) => {
                 loadItems();
             } catch (error) {
                 console.error('Error consuming item:', error);
-                alert('消費処理に失敗しました');
+                const errorMsg = error.response?.data?.error || error.message || '不明なエラー';
+                alert('消費処理に失敗しました: ' + errorMsg);
+                console.error('Detailed error:', {
+                    message: error.message,
+                    response: error.response?.data,
+                    status: error.response?.status
+                });
             }
         }
     </script>
