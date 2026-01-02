@@ -34,12 +34,12 @@ app.get('/', (c) => {
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         .status-expired {
-            background-color: #fee2e2;
-            border-left: 8px solid #ef4444;
+            background-color: #e5e5e5;
+            border-left: 8px solid #000000;
         }
         .status-warning {
-            background-color: #fef3c7;
-            border-left: 8px solid #f59e0b;
+            background-color: #fee2e2;
+            border-left: 8px solid #ef4444;
         }
         .status-normal {
             background-color: #f0fdf4;
@@ -51,24 +51,24 @@ app.get('/', (c) => {
         }
         .item-card {
             transition: transform 0.2s, box-shadow 0.2s;
-            padding: 14px 18px !important;
+            padding: 12px 16px !important;
         }
         .item-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .item-name {
-            font-size: 1.375rem;
+            font-size: 1rem;
             font-weight: 700;
             line-height: 1.4;
         }
         .item-expiry {
-            font-size: 1.25rem;
+            font-size: 0.875rem;
             font-weight: 600;
-            margin-left: 1rem;
+            margin-left: 0.75rem;
         }
         .item-details {
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: #6b7280;
         }
         .header-logo {
@@ -164,8 +164,8 @@ app.get('/', (c) => {
         <div class="bg-white rounded-lg shadow p-4 mb-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">保管場所</label>
-                    <select id="storageFilter" onchange="loadItems()" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">保管場所</label>
+                    <select id="storageFilter" onchange="loadItems()" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
                         <option value="all">すべて</option>
                         <option value="main_fridge">🧊 メイン冷蔵庫</option>
                         <option value="main_freezer">❄️ メイン冷凍庫</option>
@@ -173,8 +173,8 @@ app.get('/', (c) => {
                     </select>
                 </div>
                 <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">並び替え</label>
-                    <select id="sortBy" onchange="loadItems()" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">並び替え</label>
+                    <select id="sortBy" onchange="loadItems()" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
                         <option value="expiry">消費期限順</option>
                         <option value="created">登録日順</option>
                         <option value="name">名前順</option>
@@ -214,7 +214,7 @@ app.get('/', (c) => {
                 <!-- Expiry Date -->
                 <div class="mb-4">
                     <label class="block text-base font-medium text-gray-700 mb-2">消費期限</label>
-                    <input type="date" id="expiryDate" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base" style="max-width: 100%;">
+                    <input type="date" id="expiryDate" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base">
                     <div class="flex flex-wrap gap-2 mt-2">
                         <button type="button" onclick="setQuickDate(0)" class="text-sm bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">今日</button>
                         <button type="button" onclick="setQuickDate(1)" class="text-sm bg-gray-100 px-3 py-2 rounded hover:bg-gray-200">明日</button>
@@ -236,8 +236,18 @@ app.get('/', (c) => {
                 
                 <!-- Quantity -->
                 <div class="mb-4">
-                    <label class="block text-base font-medium text-gray-700 mb-2">数量</label>
-                    <input type="number" id="quantity" min="1" value="1" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">数量</label>
+                    <select id="quantity" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
                 </div>
                 
                 <!-- Memo -->
@@ -248,10 +258,10 @@ app.get('/', (c) => {
                 
                 <!-- Buttons -->
                 <div class="flex gap-2">
-                    <button type="submit" class="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition text-base font-semibold">
+                    <button type="submit" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-semibold">
                         <i class="fas fa-save mr-2"></i>保存
                     </button>
-                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-200 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-300 transition text-base font-semibold">
+                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition text-sm font-semibold">
                         キャンセル
                     </button>
                 </div>
@@ -262,23 +272,23 @@ app.get('/', (c) => {
     <!-- Consume Modal -->
     <div id="consumeModal" class="modal">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">消費する</h2>
-            <p id="consumeItemName" class="text-lg text-gray-600 mb-4"></p>
+            <h2 class="text-xl font-bold text-gray-800 mb-4">消費する</h2>
+            <p id="consumeItemName" class="text-base text-gray-600 mb-4"></p>
             
             <div class="mb-4">
-                <label class="block text-base font-medium text-gray-700 mb-2">消費する数量</label>
-                <input type="number" id="consumeAmount" min="1" value="1" class="w-full border border-gray-300 rounded-lg px-3 py-3 text-base">
+                <label class="block text-sm font-medium text-gray-700 mb-2">消費する数量</label>
+                <input type="number" id="consumeAmount" min="1" value="1" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
                 <p class="text-sm text-gray-500 mt-1">残り: <span id="currentQuantity"></span>個</p>
             </div>
             
             <div class="flex gap-2">
-                <button onclick="consumeItem(false)" class="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition text-base font-semibold">
+                <button onclick="consumeItem(false)" class="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm font-semibold">
                     指定数消費
                 </button>
-                <button onclick="consumeItem(true)" class="flex-1 bg-orange-600 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition text-base font-semibold">
+                <button onclick="consumeItem(true)" class="flex-1 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition text-sm font-semibold">
                     全部消費
                 </button>
-                <button onclick="closeConsumeModal()" class="flex-1 bg-gray-200 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-300 transition text-base font-semibold">
+                <button onclick="closeConsumeModal()" class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition text-sm font-semibold">
                     キャンセル
                 </button>
             </div>
