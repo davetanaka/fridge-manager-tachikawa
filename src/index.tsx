@@ -76,6 +76,32 @@ app.get('/', (c) => {
             width: auto;
             margin-right: 0.5rem;
         }
+        .user-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .user-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .user-btn.active {
+            background: white;
+            color: #2563eb;
+            border-color: white;
+        }
+        .user-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .user-btn.active:hover {
+            background: #f0f9ff;
+        }
         .modal {
             display: none;
             position: fixed;
@@ -108,14 +134,27 @@ app.get('/', (c) => {
 <body class="bg-gray-50">
     <!-- Header -->
     <header class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 shadow-lg">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold flex items-center">
-                <img src="/static/logo.png" alt="ロゴ" class="header-logo">
-                立川田中家冷蔵庫管理
-            </h1>
-            <button onclick="showAddModal()" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition">
-                <i class="fas fa-plus mr-2"></i>追加
-            </button>
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-3">
+                <h1 class="text-2xl font-bold flex items-center">
+                    <img src="/static/logo.png" alt="ロゴ" class="header-logo">
+                    立川田中家冷蔵庫管理
+                </h1>
+                <button onclick="showAddModal()" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition">
+                    <i class="fas fa-plus mr-2"></i>追加
+                </button>
+            </div>
+            <!-- User Selector -->
+            <div class="user-selector">
+                <span class="text-sm opacity-90">使用者:</span>
+                <button id="userBtnDave" onclick="selectUser(1, 'Dave')" class="user-btn active">
+                    👨 Dave
+                </button>
+                <button id="userBtnMinako" onclick="selectUser(2, 'Minako')" class="user-btn">
+                    👩 Minako
+                </button>
+                <span id="currentUserName" class="text-sm font-semibold ml-2">Dave</span>
+            </div>
         </div>
     </header>
 
@@ -250,11 +289,39 @@ app.get('/', (c) => {
     <script>
         let currentItemId = null;
         let currentConsumeItemId = null;
+        let currentUserId = 1;  // Default: Dave
+        let currentUserName = 'Dave';
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            // Load saved user from localStorage
+            const savedUserId = localStorage.getItem('currentUserId');
+            const savedUserName = localStorage.getItem('currentUserName');
+            if (savedUserId && savedUserName) {
+                currentUserId = parseInt(savedUserId);
+                currentUserName = savedUserName;
+                updateUserUI();
+            }
             loadItems();
         });
+
+        // User selection
+        function selectUser(userId, userName) {
+            currentUserId = userId;
+            currentUserName = userName;
+            // Save to localStorage
+            localStorage.setItem('currentUserId', userId);
+            localStorage.setItem('currentUserName', userName);
+            updateUserUI();
+        }
+
+        function updateUserUI() {
+            // Update buttons
+            document.getElementById('userBtnDave').classList.toggle('active', currentUserId === 1);
+            document.getElementById('userBtnMinako').classList.toggle('active', currentUserId === 2);
+            // Update display name
+            document.getElementById('currentUserName').textContent = currentUserName;
+        }
 
         // Load items from API
         async function loadItems() {
@@ -415,7 +482,7 @@ app.get('/', (c) => {
                 storage_location: document.getElementById('storageLocation').value,
                 quantity: parseInt(document.getElementById('quantity').value),
                 memo: document.getElementById('memo').value,
-                registered_by: 1  // TODO: Get from authentication
+                registered_by: currentUserId  // Use selected user
             };
             
             try {
