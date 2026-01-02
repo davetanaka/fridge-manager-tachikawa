@@ -50,10 +50,25 @@ app.get('/', (c) => {
         }
         .item-card {
             transition: transform 0.2s, box-shadow 0.2s;
+            padding: 12px 16px !important;
         }
         .item-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .item-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .item-expiry {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-left: 0.75rem;
+        }
+        .item-details {
+            font-size: 0.813rem;
+            color: #6b7280;
         }
         .modal {
             display: none;
@@ -124,7 +139,7 @@ app.get('/', (c) => {
         </div>
 
         <!-- Items List -->
-        <div id="itemsList" class="space-y-3">
+        <div id="itemsList" class="space-y-2">
             <div class="text-center text-gray-500 py-8">
                 <div class="loading mx-auto mb-4"></div>
                 読み込み中...
@@ -271,34 +286,32 @@ app.get('/', (c) => {
                 const storageIcon = getStorageIcon(item.storage_location);
                 
                 return \`
-                    <div class="item-card \${statusClass} bg-white rounded-lg shadow p-4 cursor-pointer"
+                    <div class="item-card \${statusClass} bg-white rounded-lg shadow cursor-pointer"
                          onclick="editItem(\${item.id})">
-                        <div class="flex justify-between items-start">
-                            <div class="flex-1">
-                                <h3 class="text-lg font-bold text-gray-800">\${item.item_name}</h3>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    <i class="far fa-calendar-alt mr-1"></i>
-                                    \${expiryText}
-                                </p>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    <span class="mr-3">\${storageIcon} \${getStorageLabel(item.storage_location)}</span>
-                                    <span>📦 数量: \${item.quantity}個</span>
-                                </p>
-                                \${item.memo ? \`<p class="text-xs text-gray-500 mt-1"><i class="fas fa-sticky-note mr-1"></i>\${item.memo}</p>\` : ''}
-                                <p class="text-xs text-gray-400 mt-2">
-                                    <span style="color: \${item.user_color}">●</span> \${item.user_name}が登録
-                                </p>
+                        <!-- 1行目: 商品名と消費期限（目立つように） -->
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center flex-1">
+                                <span class="item-name text-gray-800">\${item.item_name}</span>
+                                <span class="item-expiry text-gray-700">\${expiryText}</span>
                             </div>
                             <div class="flex gap-2 ml-4">
                                 <button onclick="showConsumeModal(\${item.id}, '\${item.item_name}', \${item.quantity}); event.stopPropagation();" 
-                                        class="text-green-600 hover:text-green-700 text-xl">
+                                        class="text-green-600 hover:text-green-700 text-lg">
                                     <i class="fas fa-check-circle"></i>
                                 </button>
                                 <button onclick="deleteItem(\${item.id}); event.stopPropagation();" 
-                                        class="text-red-600 hover:text-red-700 text-xl">
+                                        class="text-red-600 hover:text-red-700 text-lg">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
+                        </div>
+                        
+                        <!-- 2行目: その他の情報（横並び） -->
+                        <div class="item-details flex items-center gap-4">
+                            <span>\${storageIcon} \${getStorageLabel(item.storage_location)}</span>
+                            <span>📦 \${item.quantity}個</span>
+                            \${item.memo ? \`<span><i class="fas fa-sticky-note mr-1"></i>\${item.memo}</span>\` : ''}
+                            <span class="ml-auto" style="color: \${item.user_color}">● \${item.user_name}</span>
                         </div>
                     </div>
                 \`;
