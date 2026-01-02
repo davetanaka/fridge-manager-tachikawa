@@ -1,7 +1,7 @@
 -- Test users for development
 INSERT OR IGNORE INTO users (google_id, email, name, picture, user_color) VALUES 
   ('test-google-id-1', 'dave@example.com', 'Dave', 'https://via.placeholder.com/150', '#3B82F6'),
-  ('test-google-id-2', 'wife@example.com', 'Wife', 'https://via.placeholder.com/150', '#EC4899');
+  ('test-google-id-2', 'minako@example.com', 'Minako', 'https://via.placeholder.com/150', '#EC4899');
 
 -- User settings for test users
 INSERT OR IGNORE INTO user_settings (user_id, email_notifications_enabled, notification_time, notification_days_threshold) VALUES 
