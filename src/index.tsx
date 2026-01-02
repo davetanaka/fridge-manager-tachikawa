@@ -28,7 +28,7 @@ app.get('/', (c) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧊 冷蔵庫在庫管理</title>
+    <title>🧊 立川田中家冷蔵庫管理</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -105,7 +105,7 @@ app.get('/', (c) => {
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">
                 <i class="fas fa-snowflake mr-2"></i>
-                冷蔵庫在庫管理
+                立川田中家冷蔵庫管理
             </h1>
             <button onclick="showAddModal()" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition">
                 <i class="fas fa-plus mr-2"></i>追加
