@@ -106,7 +106,7 @@ Genspark AI Developer、マジでヤバい
 ノンプログラマーの僕が1時間で作ったアプリ👇
 
 【使ってる技術】
-・Hono（2024年注目のフレームワーク）
+・Hono（軽量高速フレームワーク）
 ・Cloudflare Pages（エッジコンピューティング）
 ・D1 Database（グローバル分散SQLite）
 ・TypeScript（型安全）
